@@ -23,7 +23,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "indunil/lambda.js",
-        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n\n\n    // You must always end/destroy the DB connection after it's used\n    rds.beginTransaction({\n        instanceIdentifier: 'indunil3'\n    }, function (error, connection) {\n        if (error) {\n            throw error;\n        }\n    });\n\n\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n\n\n    // You must always end/destroy the DB connection after it's used\n    rds.beginTransaction({\n        instanceIdentifier: 'indunil3'\n    }, function (error, connection) {\n        if (error) {\n            throw error;\n        }\n    });\n\n\n\n\n    callback(null, { \"message\": \"Successfully  jjjj  executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -212,7 +212,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1561617758925
+    "lastSave": 1561964546128
   },
   "VCS_STATE": {
     "provider": "GitHub",
