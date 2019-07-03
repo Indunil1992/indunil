@@ -1,182 +1,68 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "64a996d6-080b-4b81-b487-ec4bf9e09de2": {
-        "id": "64a996d6-080b-4b81-b487-ec4bf9e09de2",
+      "fdce9ee7-c75f-4415-a46e-83ced3ed3541": {
+        "id": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
         "parent": null,
         "name": "indunil",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "2084f52d-7207-4c17-93dc-a30dbd220e87",
-          "00572422-9927-4157-afd2-367c631e2d97"
+          "080960ca-f278-4b62-9f1a-ed982a752daf"
         ],
         "isRemovable": false,
         "filePath": "indunil"
       },
-      "2084f52d-7207-4c17-93dc-a30dbd220e87": {
-        "id": "2084f52d-7207-4c17-93dc-a30dbd220e87",
-        "parent": "64a996d6-080b-4b81-b487-ec4bf9e09de2",
+      "080960ca-f278-4b62-9f1a-ed982a752daf": {
+        "id": "080960ca-f278-4b62-9f1a-ed982a752daf",
+        "parent": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
         "name": "lambda.js",
-        "type": "JS_LAMBDA",
+        "type": "LAMBDA_FILE",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "indunil/lambda.js",
-        "code": "let SL_AWS = require('slappforge-sdk-aws');\nlet connectionManager = require('./ConnectionManager');\nconst rds = new SL_AWS.RDS(connectionManager);\n\nexports.handler = function (event, context, callback) {\n\n\n\n    // You must always end/destroy the DB connection after it's used\n    rds.beginTransaction({\n        instanceIdentifier: 'indunil3'\n    }, function (error, connection) {\n        if (error) {\n            throw error;\n        }\n    });\n\n\n\n\n    callback(null, { \"message\": \"Successfully  jjjj  executed\" });\n}",
+        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully executed\"});\n}",
+        "triggers": [
+          {
+            "resourceName": "apigusEast1Londonindunilqatstany",
+            "config": {}
+          }
+        ],
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
           "timeout": 60,
           "memory": 128,
           "layers": []
-        },
-        "triggers": []
-      },
-      "00572422-9927-4157-afd2-367c631e2d97": {
-        "id": "00572422-9927-4157-afd2-367c631e2d97",
-        "parent": "64a996d6-080b-4b81-b487-ec4bf9e09de2",
-        "name": "ConnectionManager.js",
-        "type": "JS_FILE",
-        "isDirectory": false,
-        "children": [],
-        "isRemovable": true,
-        "filePath": "indunil/ConnectionManager.js",
-        "code": "module.exports = function() {\n    this.dbConnections = [];\n\n    this.dbConnections[\"indunil\"] = {\n        host: process.env.EndPoint_rdsIndunil,\n        port: process.env.Port_rdsIndunil,\n        user: process.env.User_rdsIndunil,\n        password: process.env.Password_rdsIndunil,\n        database: \"indunil\"\n    };\n    this.dbConnections[\"indunil1\"] = {\n        host: process.env.EndPoint_rdsIndunil1,\n        port: process.env.Port_rdsIndunil1,\n        user: process.env.User_rdsIndunil1,\n        password: process.env.Password_rdsIndunil1,\n        database: \"indunil1\"\n    };\n    this.dbConnections[\"indunil3\"] = {\n        host: process.env.EndPoint_rdsIndunil3,\n        port: process.env.Port_rdsIndunil3,\n        user: process.env.User_rdsIndunil3,\n        password: process.env.Password_rdsIndunil3,\n        database: \"indunil3\"\n    };\n};"
+        }
       }
     },
     "deletedFiles": [],
-    "rootNode": "64a996d6-080b-4b81-b487-ec4bf9e09de2",
+    "rootNode": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
     "openFiles": [
-      "2084f52d-7207-4c17-93dc-a30dbd220e87"
+      "080960ca-f278-4b62-9f1a-ed982a752daf"
     ],
-    "currentFileId": "2084f52d-7207-4c17-93dc-a30dbd220e87",
+    "currentFileId": "080960ca-f278-4b62-9f1a-ed982a752daf",
     "resources": {
-      "rds-indunil": {
-        "name": "rds-indunil",
-        "type": "RDS",
+      "apigusEast1Londonindunilqatstany": {
+        "name": "apigusEast1Londonindunilqatstany",
+        "type": "API_GATEWAY",
         "config": {
-          "editMode": false,
-          "operation": 1,
-          "rdsInstance": {
-            "rdsEngineType": "mysql",
-            "rdsEdition": "",
-            "rdsInstanceSpec": {
-              "dbInstanceClass": "db.t2.micro",
-              "dbLicenseModel": "general-public-license",
-              "dbEngineVersion": "5.7.19"
-            },
-            "rdsSetting": {
-              "instanceIdentifier": "indunil",
-              "masterUsername": "indunil",
-              "masterPassword": "sachithra"
-            },
-            "rdsDBOptions": {
-              "dbName": "indunil",
-              "dbPort": "3306"
-            },
-            "rdsInstanceArn": "",
-            "Host": "",
-            "doesExist": false,
-            "initializationQuery": "CREATE TABLE Persons (\n    PersonID int,\n    LastName varchar(255),\n    FirstName varchar(255),\n    Address varchar(255),\n    City varchar(255) \n);",
-            "alreadyDeployed": false
-          },
-          "rdsInstanceResources": [],
-          "projectRegion": "us-east-1",
-          "mode": 0,
-          "additionalFiles": [],
-          "params": {
-            "query": "",
-            "inserts": ""
-          },
-          "isGlobalEditMode": false,
-          "enableInject": true,
-          "isNewFromGlobal": false
-        }
-      },
-      "rds-indunil1": {
-        "name": "rds-indunil1",
-        "type": "RDS",
-        "config": {
-          "editMode": false,
-          "operation": 1,
-          "rdsInstance": {
-            "rdsEngineType": "mysql",
-            "rdsEdition": "",
-            "rdsInstanceSpec": {
-              "dbInstanceClass": "db.t2.micro",
-              "dbLicenseModel": "general-public-license",
-              "dbEngineVersion": "5.7.19"
-            },
-            "rdsSetting": {
-              "instanceIdentifier": "indunil1",
-              "masterUsername": "indunil1",
-              "masterPassword": "sachithra"
-            },
-            "rdsDBOptions": {
-              "dbName": "indunil1",
-              "dbPort": "3306"
-            },
-            "rdsInstanceArn": "",
-            "Host": "",
-            "doesExist": false,
-            "initializationQuery": "",
-            "alreadyDeployed": false
-          },
-          "rdsInstanceResources": [],
-          "projectRegion": "us-east-1",
-          "mode": 0,
-          "additionalFiles": [],
-          "params": {
-            "query": "",
-            "inserts": ""
-          },
-          "isGlobalEditMode": false,
-          "enableInject": true,
-          "isNewFromGlobal": false
-        }
-      },
-      "rds-indunil3": {
-        "name": "rds-indunil3",
-        "type": "RDS",
-        "config": {
-          "editMode": false,
-          "operation": 1,
-          "rdsInstance": {
-            "rdsEngineType": "mysql",
-            "rdsEdition": "",
-            "rdsInstanceSpec": {
-              "dbInstanceClass": "db.t2.micro",
-              "dbLicenseModel": "general-public-license",
-              "dbEngineVersion": "5.7.19"
-            },
-            "rdsSetting": {
-              "instanceIdentifier": "indunil3",
-              "masterUsername": "indunil3",
-              "masterPassword": "indunil3"
-            },
-            "rdsDBOptions": {
-              "dbName": "indunil3",
-              "dbPort": "3306"
-            },
-            "rdsInstanceArn": "",
-            "Host": "",
-            "doesExist": false,
-            "initializationQuery": "",
-            "alreadyDeployed": false
-          },
-          "rdsInstanceResources": [],
-          "projectRegion": "us-east-1",
-          "mode": 0,
-          "additionalFiles": [],
-          "params": {
-            "query": "",
-            "inserts": ""
-          },
-          "isGlobalEditMode": false,
-          "enableInject": true,
-          "isNewFromGlobal": false
-        }
+          "selectedRegion": "us-east-1",
+          "apiMode": 0,
+          "apiName": "London",
+          "endpointType": "EDGE",
+          "resourceMode": 0,
+          "resourceName": "indunil/qa/tst",
+          "resourcePath": "/indunil/qa/tst",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "prod"
+        },
+        "globallyEditable": false
       }
     },
     "customTemplate": {
@@ -194,25 +80,17 @@
       }
     ],
     "packageJSON": {
-      "dependencies": {
-        "slappforge-sdk-aws": {
-          "name": "slappforge-sdk-aws",
-          "language": "javascript",
-          "version": "0.0.5",
-          "dev": false,
-          "notRemovable": false
-        }
-      }
+      "dependencies": {}
     }
   },
   "PROJECT_META": {
     "projectName": "indunil",
-    "projectDescription": "sample",
+    "projectDescription": "kk",
     "projectVersion": "1.0.0",
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1561964546128
+    "lastSave": 1562133387629
   },
   "VCS_STATE": {
     "provider": "GitHub",
