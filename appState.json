@@ -17,22 +17,28 @@
         "id": "080960ca-f278-4b62-9f1a-ed982a752daf",
         "parent": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
         "name": "lambda.js",
-        "type": "LAMBDA_FILE",
+        "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "indunil/lambda.js",
-        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully executed\"});\n}",
+        "code": "exports.handler = function(event, context, callback) {\n    \n    \n    callback(null, {\"message\": \"Successfully executed\"});\n}",
         "triggers": [
           {
             "resourceName": "apigusEast1Londonindunilqatstany",
             "config": {}
+          },
+          {
+            "resourceName": "sqssach",
+            "config": {
+              "BatchSize": "10"
+            }
           }
         ],
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
-          "timeout": 60,
+          "timeout": 30,
           "memory": 128,
           "layers": []
         }
@@ -63,6 +69,33 @@
           "stageName": "prod"
         },
         "globallyEditable": false
+      },
+      "sqssach": {
+        "name": "sqssach",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "sach",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/sach",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "contentBasedDeduplication": false
+        }
       }
     },
     "customTemplate": {
@@ -90,7 +123,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562133387629
+    "lastSave": 1562655789219
   },
   "VCS_STATE": {
     "provider": "GitHub",
