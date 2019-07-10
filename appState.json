@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "indunil/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.sendMessage({\n        MessageBody: 'test put',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/Hiru1T`,\n        DelaySeconds: '0',\n        MessageAttributes: {\n            \"1\": {\n                \"DataType\": \"String\",\n                \"StringValue\": \"abc\"\n            },\n            \"2\": {\n                \"DataType\": \"Number\",\n                \"StringValue\": \"123\"\n            },\n            \"3\": {\n                \"DataType\": \"Binary\",\n                \"BinaryValue\": \"0\"\n            }\n        }\n    }, function (data) {\n        console.log(\"Success data\");\n                 console.log( data );\n        // your logic (logging etc) to handle successful message delivery, should be here\n    }, function (error) {\n        console.log(\"not Success\");\n                 console.log( error );\n        // your logic (logging etc) to handle failures, should be here\n    });\n\n\n\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.receiveMessage({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/run`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '10',\n        VisibilityTimeout: '15',\n        WaitTimeSeconds: '0',\n        MessageAttributeNames: ['a', 's', 'd']\n    }).promise()\n        .then(receivedMsgData => {\n            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n                let receivedMessages = receivedMsgData.Messages;\n                receivedMessages.forEach(message => {\n                    console.log(\"Success message\");\n                 console.log( message );\n                    // your logic to access each message through out the loop. Each message is available under variable message \n                    // within this block\n                });\n            } else {\n                console.log(\"no msgesss\");\n                // console.log( data );\n                // No messages to process\n            }\n        })\n        .catch(err => {\n            console.log(\"not Success\");\n                 console.log( err );\n            // error handling goes here\n        });\n\n\n\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "triggers": [
           {
             "resourceName": "apigusEast1Londonindunilqatstany",
@@ -97,25 +97,32 @@
           "contentBasedDeduplication": false
         }
       },
-      "sqsHiru1T": {
-        "name": "sqsHiru1T",
+      "sqsrun": {
+        "name": "sqsrun",
         "type": "SQS",
         "config": {
-          "mode": 1,
-          "existing": true,
-          "name": "Hiru1T",
-          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/Hiru1T",
+          "mode": 0,
+          "existing": false,
+          "name": "run",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/run",
           "selectedRegion": "us-east-1",
-          "deliveryDelay": "0",
+          "deliveryDelay": "10",
           "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": true,
+          "useSSE": true,
+          "kmsCustomerMasterKey": "existing",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
           "queueType": "standardQueue",
-          "defaultVisibilityTimeout": "120",
+          "defaultVisibilityTimeout": "100",
           "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": "345600",
-          "messageRetentionPeriodUnit": "seconds",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": "0",
-          "queueARN": "arn:aws:sqs:us-east-1:318300609668:Hiru1T"
+          "messageRetentionPeriod": "5",
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": "400",
+          "receiveMessageWaitTime": "10",
+          "deadLetterQueueName": "8",
+          "maximumReceives": "5",
+          "contentBasedDeduplication": false
         }
       }
     },
@@ -159,7 +166,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562743700196
+    "lastSave": 1562763061274
   },
   "VCS_STATE": {
     "provider": "GitHub",
