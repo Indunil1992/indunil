@@ -9,7 +9,7 @@ exports.handler = function (event, context, callback) {
         AttributeNames: ['All'],
         MaxNumberOfMessages: '10',
         VisibilityTimeout: '15',
-        WaitTimeSeconds: '0',
+        WaitTimeSeconds: '10',
         MessageAttributeNames: ['a', 's', 'd']
     }).promise()
         .then(receivedMsgData => {
@@ -17,7 +17,7 @@ exports.handler = function (event, context, callback) {
                 let receivedMessages = receivedMsgData.Messages;
                 receivedMessages.forEach(message => {
                     console.log("Success message");
-                 console.log( message );
+                    console.log(message);
                     // your logic to access each message through out the loop. Each message is available under variable message 
                     // within this block
                 });
@@ -29,7 +29,7 @@ exports.handler = function (event, context, callback) {
         })
         .catch(err => {
             console.log("not Success");
-                 console.log( err );
+            console.log(err);
             // error handling goes here
         });
 
