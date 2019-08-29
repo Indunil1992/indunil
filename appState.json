@@ -1,156 +1,88 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "fdce9ee7-c75f-4415-a46e-83ced3ed3541": {
-        "id": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
+      "a6820b2e-646e-4de2-914f-4b3d4c75013b": {
+        "id": "a6820b2e-646e-4de2-914f-4b3d4c75013b",
         "parent": null,
         "name": "indunil",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "080960ca-f278-4b62-9f1a-ed982a752daf"
+          "243c1a2e-4c9f-478c-89a4-7a934ac66f2d"
         ],
         "isRemovable": false,
         "filePath": "indunil"
       },
-      "080960ca-f278-4b62-9f1a-ed982a752daf": {
-        "id": "080960ca-f278-4b62-9f1a-ed982a752daf",
-        "parent": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
+      "243c1a2e-4c9f-478c-89a4-7a934ac66f2d": {
+        "id": "243c1a2e-4c9f-478c-89a4-7a934ac66f2d",
+        "parent": "a6820b2e-646e-4de2-914f-4b3d4c75013b",
         "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "indunil/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n    sqs.receiveMessage({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/Hiru1T`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '1',\n        VisibilityTimeout: '30',\n        WaitTimeSeconds: '10',\n        MessageAttributeNames: ['a', 's', 'd']\n    }).promise()\n        .then(receivedMsgData => {\n            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n                let receivedMessages = receivedMsgData.Messages;\n                receivedMessages.forEach(message => {\n                    console.log(\"msg Success\");\n                 console.log( message );\n                    // your logic to access each message through out the loop. Each message is available under variable message \n                    // within this block\n                });\n            } else {\n                console.log(\"nooo Success\");\n                 //console.log( data );\n                // No messages to process\n            }\n        })\n        .catch(err => {\n            console.log(\"err Success\");\n                 console.log( err );\n            // error handling goes here\n        });\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
-        "triggers": [
-          {
-            "resourceName": "apigusEast1Londonindunilqatstany",
-            "config": {}
-          },
-          {
-            "resourceName": "sqssach",
-            "config": {
-              "BatchSize": "10"
-            }
-          }
-        ],
+        "code": "exports.handler = function(event, context, callback) {\n    console.log(\"test API\")\n    callback(null, {\"message\": \"Successfully executed\"});\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
-          "timeout": 30,
+          "timeout": 60,
           "memory": 128,
           "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigusEast1sachithraAPInameindunilqatstany",
+            "config": {}
+          }
+        ],
+        "testCases": {
+          "e67e35b9-b117-44e2-86ad-3b160196854e": {
+            "id": "e67e35b9-b117-44e2-86ad-3b160196854e",
+            "name": "Test event",
+            "functionId": "243c1a2e-4c9f-478c-89a4-7a934ac66f2d",
+            "event": "{\"key1\": \"value1\", \"key2\": \"value2\", \"key3\": \"value3\"}",
+            "eventTemplate": "hello-world"
+          }
         }
       }
     },
     "deletedFiles": [],
-    "rootNode": "fdce9ee7-c75f-4415-a46e-83ced3ed3541",
+    "rootNode": "a6820b2e-646e-4de2-914f-4b3d4c75013b",
     "openFiles": [
-      "080960ca-f278-4b62-9f1a-ed982a752daf"
+      "243c1a2e-4c9f-478c-89a4-7a934ac66f2d"
     ],
-    "currentFileId": "080960ca-f278-4b62-9f1a-ed982a752daf",
+    "currentFileId": "243c1a2e-4c9f-478c-89a4-7a934ac66f2d",
     "resources": {
-      "apigusEast1Londonindunilqatstany": {
-        "name": "apigusEast1Londonindunilqatstany",
+      "apigusEast1sachithraAPInameindunilqatstany": {
+        "name": "apigusEast1sachithraAPInameindunilqatstany",
         "type": "API_GATEWAY",
         "config": {
           "selectedRegion": "us-east-1",
-          "apiMode": 0,
-          "apiName": "London",
-          "endpointType": "EDGE",
+          "apiMode": 1,
+          "apiName": "sachithraAPIname",
+          "apiId": "052p9kjn18",
+          "endpointType": "REGIONAL",
+          "rootResourceId": "zrjp6rdv3b",
+          "existingResources": {
+            "/": "zrjp6rdv3b"
+          },
           "resourceMode": 0,
           "resourceName": "indunil/qa/tst",
           "resourcePath": "/indunil/qa/tst",
           "restMethod": "ANY",
           "proxyIntegration": false,
           "enableCORS": false,
-          "stageMode": 0,
-          "stageName": "prod"
-        },
-        "globallyEditable": false
-      },
-      "sqssach": {
-        "name": "sqssach",
-        "type": "SQS",
-        "config": {
-          "mode": 0,
-          "existing": false,
-          "name": "sach",
-          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/sach",
-          "selectedRegion": "us-east-1",
-          "deliveryDelay": 0,
-          "deliveryDelayUnit": "seconds",
-          "useRedrivePolicy": false,
-          "useSSE": false,
-          "kmsCustomerMasterKey": "default",
-          "accountId": "318300609668",
-          "dataKeyReusePeriod": 5,
-          "queueType": "standardQueue",
-          "defaultVisibilityTimeout": 30,
-          "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": 4,
-          "messageRetentionPeriodUnit": "days",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": 0,
-          "deadLetterQueueName": "",
-          "contentBasedDeduplication": false,
-          "createdByApp": true
-        }
-      },
-      "sqssasa": {
-        "name": "sqssasa",
-        "type": "SQS",
-        "config": {
-          "mode": 0,
-          "existing": false,
-          "name": "sasa",
-          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/sasa",
-          "selectedRegion": "us-east-1",
-          "deliveryDelay": "10",
-          "deliveryDelayUnit": "seconds",
-          "useRedrivePolicy": true,
-          "useSSE": false,
-          "kmsCustomerMasterKey": "default",
-          "accountId": "318300609668",
-          "dataKeyReusePeriod": 5,
-          "queueType": "standardQueue",
-          "defaultVisibilityTimeout": 30,
-          "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": 4,
-          "messageRetentionPeriodUnit": "days",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": "10",
-          "deadLetterQueueName": "10",
-          "maximumReceives": "5",
-          "contentBasedDeduplication": false
-        }
-      },
-      "sqsHiru1T": {
-        "name": "sqsHiru1T",
-        "type": "SQS",
-        "config": {
-          "mode": 1,
-          "existing": true,
-          "name": "Hiru1T",
-          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/Hiru1T",
-          "selectedRegion": "us-east-1",
-          "deliveryDelay": "0",
-          "deliveryDelayUnit": "seconds",
-          "queueType": "standardQueue",
-          "defaultVisibilityTimeout": "120",
-          "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": "345600",
-          "messageRetentionPeriodUnit": "seconds",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": "0",
-          "queueARN": "arn:aws:sqs:us-east-1:318300609668:Hiru1T"
+          "stageMode": 1,
+          "stageName": "Test",
+          "stageDeploymentId": "uldgfq",
+          "mode": 1
         }
       }
     },
     "customTemplate": {
       "dialect": null,
-      "definitions": {}
+      "definitions": null
     },
     "envVariables": [
       {
@@ -163,32 +95,17 @@
       }
     ],
     "packageJSON": {
-      "dependencies": {
-        "aws-sdk": {
-          "name": "aws-sdk",
-          "language": "javascript",
-          "version": "2.176.0",
-          "dev": true,
-          "notRemovable": false
-        },
-        "slappforge-sdk-aws": {
-          "name": "slappforge-sdk-aws",
-          "language": "javascript",
-          "version": "0.0.5",
-          "dev": false,
-          "notRemovable": false
-        }
-      }
+      "dependencies": {}
     }
   },
   "PROJECT_META": {
     "projectName": "indunil",
-    "projectDescription": "kk",
+    "projectDescription": "",
     "projectVersion": "1.0.0",
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562904641457
+    "lastSave": 1567079800563
   },
   "VCS_STATE": {
     "provider": "GitHub",
